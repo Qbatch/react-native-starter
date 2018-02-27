@@ -1,80 +1,48 @@
-import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
+import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
 
-import InputPlace from './src/components/Input/PlaceInput';
-import PlaceDetail from './src/components/Detail/PlaceDetail';
-import OutputPlaces from './src/components/Output/PlaceList';
+import AuthScreen from './src/screens/Auth/Auth';
+import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
+import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
+import PlaceDetailScreen from './src/screens/Detail/PlaceDetail';
 
-import Image from './src/assets/clouds.jpeg';
+import configureStore from './src/store/configureStore';
 
-import { addPlace, deletePlace, selectPlace, unselectPlace } from './src/store/actions/index';
+const store = configureStore();
 
-class App extends React.Component {
-  componentWillMount () {
-    console.log(this.props);
-  }
+// Register Screens
+Navigation.registerComponent(
+  "react-native-starter.AuthScreen",
+  () => AuthScreen,
+  store,
+  Provider
+);
 
-  componentWillReceiveProps (nextProps) {
-    console.log(nextProps);
-  }
-  
-  onAddPlace = (placeName) => {
-    this.props.onAddPlace(placeName);
-  }
+Navigation.registerComponent(
+  "react-native-starter.SharePlaceScreen",
+  () => SharePlaceScreen,
+  store,
+  Provider
+);
 
-  onItemDeleted = () => {
-    this.props.onDeletePlace();
-  }
+Navigation.registerComponent(
+  "react-native-starter.FindPlaceScreen",
+  () => FindPlaceScreen,
+  store,
+  Provider
+);
 
-  onItemSelected = (key) => {
-    this.props.onSelectPlace(key);
-  }
+Navigation.registerComponent(
+  "react-native-starter.PlaceDetailScreen",
+  () => PlaceDetailScreen,
+  store,
+  Provider
+);
 
-  onModalClosed = () => {
-    this.props.onUnsellectPlace();
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <PlaceDetail selectedPlace={this.props.selectedPlace}
-          onItemDeleted={this.onItemDeleted}
-          onModalClosed={this.onModalClosed}
-        />
-        <InputPlace onAddPlace={this.onAddPlace} />
-        <OutputPlaces places={this.props.places}
-        onItemSelected={this.onItemSelected}
-        />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 25,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  }
+// Start a App
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: "react-native-starter.AuthScreen",
+    title: "Login"
+  }  
 });
-
-const mapStateToProps = state => {
-  return {
-    places: state.placesData.places,
-    selectedPlace: state.placesData.selectedPlace
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddPlace: (name) => dispatch(addPlace(name)),
-    onDeletePlace: () => dispatch(deletePlace()),
-    onSelectPlace: (key) => dispatch(selectPlace(key)),
-    onUnsellectPlace: () => dispatch(unselectPlace())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
