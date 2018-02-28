@@ -5,6 +5,23 @@ import { connect } from 'react-redux';
 import PlaceOutput from '../../components/Output/PlaceList';
 
 class FindPlaceScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.props.navigator.setOnNavigatorEvent(this.OnNavigatorEvent);
+    }
+
+    OnNavigatorEvent = event => {
+        console.log(event);
+        if (event.type === "NavBarButtonPress") {
+            if (event.id === "sideDrawerToggle") {
+                this.props.navigator.toggleDrawer({
+                    side: "left"
+                });
+            }
+        }
+    }
+    
     onItemSelected = (key) => {
         const selPlace = this.props.places.find(place => {
             return place.key === key;
