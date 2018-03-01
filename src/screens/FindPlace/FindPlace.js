@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import PlaceOutput from '../../components/Output/PlaceList';
+import PlaceOutput from '../../components/PlaceList/PlaceList';
 
 class FindPlaceScreen extends Component {
     constructor(props) {
