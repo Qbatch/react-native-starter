@@ -4,7 +4,7 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 class SideDrawer extends Component {
     render () {
         return(
-            <View style={[ styles.container, { width: Dimensions.get("window").width * 0.5 } ]}>
+            <View style={[ styles.container, { width: Dimensions.get("window").width * 0.8 } ]}>
                 <Text>SideDrawer</Text>
             </View>
         );
